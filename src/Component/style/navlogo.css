@@ -1,0 +1,18 @@
+/* Logo icon */
+.nav-logo-icon {
+    background-color: var(--color-primary);
+    color: #ffffff;
+}
+
+.nav-logo:hover .nav-logo-icon {
+    background-color: var(--color-primary-hover);
+}
+
+/* Logo text */
+.nav-logo-text {
+    color: var(--color-text-primary);
+}
+
+.nav-logo-accent {
+    color: var(--color-primary);
+}
