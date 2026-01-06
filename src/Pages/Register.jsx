@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { authContext } from '../Layout/RootLayout';
+import { useNavigate } from 'react-router';
 const Register = () => {
+    const { handleSignUP } = useContext(authContext);
+    const navigate = useNavigate();
+
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("successfully tapped");
@@ -34,6 +39,8 @@ const Register = () => {
             alert("Password must contain at least one special character");
             return
         }
+
+        handleSignUP(email, password, name, photoUrl)
 
     }
     return (
@@ -94,7 +101,7 @@ const Register = () => {
                         <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign up</button>
                     </div>
                     <p className="px-6 text-sm text-center dark:text-gray-600">Already have an account?
-                        <a rel="noopener noreferrer" href="#" className="hover:underline dark:text-violet-600">Sign in</a>.
+                        <button type='button' onClick={() => navigate('/login')} className="hover:underline dark:text-violet-600">Sign in</button>.
                     </p>
                 </div>
             </form>

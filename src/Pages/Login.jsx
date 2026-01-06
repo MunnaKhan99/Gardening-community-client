@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { authContext } from '../Layout/RootLayout';
+import { useNavigate } from 'react-router';
 
 
 const Login = () => {
-
-
+    const navigate = useNavigate();
+    const { handleSignIn } = useContext(authContext);
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -11,6 +13,9 @@ const Login = () => {
         const password = form.password.value;
 
         console.log({ email, password });
+
+        handleSignIn(email, password)
+        navigate('/')
 
 
     }
