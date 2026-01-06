@@ -3,8 +3,8 @@ import { NavLink } from "react-router";
 
 const navItems = [
   { name: "Home", path: "/" },
-  { name: "Explore Gardeners", path: "/gardeners" },
-  { name: "Browse Tips", path: "/tips" },
+  { name: "Explore Gardeners", path: "/explore-gardener" },
+  { name: "Browse Tips", path: "/browse-tips" },
   { name: "Share a Garden Tip", path: "/share" },
   { name: "My Tips", path: "/my-tips" },
 ];

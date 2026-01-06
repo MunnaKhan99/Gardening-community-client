@@ -5,6 +5,7 @@ import BrowseTips from "../Pages/BrowseTips";
 import ExploreGardener from "../Pages/ExploreGardener";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
+import ErrorPage from "../Pages/ErrorPage";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login />
+            },
+            {
+                path: "/*",
+                element: <ErrorPage />
             },
         ]
     }
