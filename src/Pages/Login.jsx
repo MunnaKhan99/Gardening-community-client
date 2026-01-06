@@ -16,8 +16,6 @@ const Login = () => {
 
         handleSignIn(email, password)
         navigate('/')
-
-
     }
     return (
         <div className="w-full max-w-md p-4 rounded-md shadow sm:p-8 mx-auto bg-black text-white">
@@ -80,7 +78,14 @@ const Login = () => {
                         />
                     </div>
                 </div>
-                <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign in</button>
+                <div className="space-y-2">
+                    <div>
+                        <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign up</button>
+                    </div>
+                    <p className="px-6 text-sm text-center dark:text-gray-600">Don't have an account?
+                        <button type='button' onClick={() => navigate('/register')} className="hover:underline dark:text-violet-600"> Sign Up</button>.
+                    </p>
+                </div>
             </form>
         </div>
     );

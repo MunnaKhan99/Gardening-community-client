@@ -9,27 +9,18 @@ const navItems = [
   { name: "My Tips", path: "/my-tips" },
 ];
 
-const NavLinks = ({ mobile = false }) => {
+const NavLinks = ({ mobile = false, closeMenu }) => {
   return (
-    <nav
-      className={
-        mobile
-          ? "flex flex-col gap-1"
-          : "flex items-center gap-1"
-      }
-    >
+    <nav className={mobile ? "flex flex-col gap-1" : "flex items-center gap-1"}>
       {navItems.map((item) => (
         <NavLink
           key={item.name}
           to={item.path}
+          onClick={closeMenu}
           className={({ isActive }) =>
             `
-            ${
-              mobile
-                ? "px-4 py-3 rounded-lg"
-                : "px-4 py-2 rounded-full"
-            }
-            text-sm font-medium transition-colors
+            ${mobile ? "px-4 py-3 rounded-lg" : "px-4 py-2 rounded-full"}
+            text-sm font-medium transition-all
             ${
               isActive
                 ? "bg-[var(--color-primary)] text-white"

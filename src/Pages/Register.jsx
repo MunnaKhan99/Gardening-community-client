@@ -41,6 +41,7 @@ const Register = () => {
         }
 
         handleSignUP(email, password, name, photoUrl)
+        navigate('/')
 
     }
     return (

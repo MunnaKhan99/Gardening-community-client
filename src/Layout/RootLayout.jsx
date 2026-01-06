@@ -1,8 +1,9 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Outlet } from 'react-router';
 import Navbar from '../Component/Navbar/Navbar';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import auth from '../firebase.config';
+import Swal from 'sweetalert2';
 
 
 export const authContext = createContext();
@@ -20,19 +21,32 @@ const RootLayout = () => {
                 console.log(user);
                 alert("Successfully signup")
 
-
                 return updateProfile(userCredential.user, {
                     displayName: name,
                     photoURL: photoUrl
                 })
+
+
+
             })
             .then(() => {
-                console.log("Profile updated successfully");
-                alert("Signup successful");
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: " Successfully SignIn...",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             })
             .catch(error => {
                 const errorMessage = error.message;
                 console.log(errorMessage);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: errorMessage,
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                });
             })
     }
 
@@ -41,12 +55,24 @@ const RootLayout = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log('logged in user: ', user);
+                console.log(user);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Logged in",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
 
             })
             .catch((error) => {
                 const errorMessage = error.message;
-                console.log('Error', errorMessage);
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: errorMessage,
+                    footer: '<a href="#">Why do I have this issue?</a>'
+                });
             });
     }
 
@@ -62,13 +88,20 @@ const RootLayout = () => {
         }
     }, [])
 
-
+    const logOut = () => {
+        signOut(auth).then(() => {
+            alert("successfully logout")
+        }).catch((error) => {
+            alert(error.message);
+        });
+    }
     const contextValue = {
         handleSignUP,
         handleSignIn,
         user,
         setUser,
-        loading
+        loading,
+        logOut
 
     }
     return (
