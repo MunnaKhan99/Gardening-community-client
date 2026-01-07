@@ -6,6 +6,7 @@ import ExploreGardener from "../Pages/ExploreGardener";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import ErrorPage from "../Pages/ErrorPage";
+import TipsDetails from "../Component/TipsDetails/TipsDetails";
 const router = createBrowserRouter([
     {
         path: '/',
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login />
+            },
+            {
+                path: "/tips/:id",
+                element: <TipsDetails />
             },
             {
                 path: "/*",

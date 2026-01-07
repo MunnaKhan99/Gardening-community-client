@@ -9,6 +9,7 @@ const Home = () => {
             <Carousel />
             <OurCommunity />
             <GardenTips />
+            
         </div>
     );
 };
