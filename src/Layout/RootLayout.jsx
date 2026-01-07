@@ -4,6 +4,7 @@ import Navbar from '../Component/Navbar/Navbar';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile } from 'firebase/auth';
 import auth from '../firebase.config';
 import Swal from 'sweetalert2';
+import Footer from '../Pages/Footer';
 
 
 export const authContext = createContext();
@@ -112,6 +113,7 @@ const RootLayout = () => {
                 <authContext.Provider value={contextValue}>
                     <Navbar />
                     <Outlet />
+                    <Footer />
                 </authContext.Provider>
             </themeContext.Provider>
 

@@ -5,7 +5,7 @@ const navItems = [
   { name: "Home", path: "/" },
   { name: "Explore Gardeners", path: "/explore-gardener" },
   { name: "Browse Tips", path: "/browse-tips" },
-  { name: "Share Tips", path: "/share" },
+  { name: "Share Tips", path: "/share-tips" },
   { name: "My Tips", path: "/my-tips" },
 ];
 
@@ -21,10 +21,9 @@ const NavLinks = ({ mobile = false, closeMenu }) => {
             `
             ${mobile ? "px-4 py-3 rounded-lg" : "px-4 py-2 rounded-full"}
             text-sm font-medium transition-all
-            ${
-              isActive
-                ? "bg-(--color-primary) text-white"
-                : "text-(--color-text-secondary) hover:bg-(--color-primary-soft)"
+            ${isActive
+              ? "bg-(--color-primary) text-white"
+              : "text-(--color-text-secondary) hover:bg-(--color-primary-soft)"
             }
           `
           }

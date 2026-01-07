@@ -7,6 +7,7 @@ import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import ErrorPage from "../Pages/ErrorPage";
 import TipsDetails from "../Component/TipsDetails/TipsDetails";
+import ShareTip from "../Pages/ShareTip";
 const router = createBrowserRouter([
     {
         path: '/',
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
             {
                 path: "/browse-tips",
                 element: <BrowseTips />
+            },
+            {
+                path: "/share-tips",
+                element: <ShareTip />
             },
             {
                 path: "/register",
