@@ -5,6 +5,7 @@ import RightSide from "./RightSide";
 import { HiMenu, HiX } from "react-icons/hi";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { authContext, themeContext } from "../../Layout/RootLayout";
+import { NavLink } from "react-router";
 
 const Navbar = () => {
     const { user, logOut } = useContext(authContext);
@@ -98,9 +99,24 @@ const Navbar = () => {
                         </div>
 
                         {/* Menu */}
-                        <div className="px-4 py-4">
+                        <div className="px-4 py-4 space-y-4">
                             <NavLinks mobile closeMenu={() => setOpen(false)} />
+
+                            {/* Mobile only Login / Register */}
+                            {!user && (
+                                <div className="flex flex-col gap-2 pt-4 border-t border-(--color-border)">
+                                    <NavLink
+                                        to="/login"
+                                        onClick={() => setOpen(false)}
+                                        className="w-full py-3 rounded-lg text-center
+                           bg-(--color-primary) text-white font-medium"
+                                    >
+                                        Signin/SignUp
+                                    </NavLink>
+                                </div>
+                            )}
                         </div>
+
                     </div>
                 </div>
             )}
