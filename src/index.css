@@ -1,17 +1,24 @@
 :root {
+  font-family: inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   /* Brand */
-  --color-primary: #16a34a;        /* Main green */
+  --color-primary: #16a34a;
+  /* Main green */
   --color-primary-hover: #15803d;
   --color-primary-soft: #dcfce7;
 
   /* Backgrounds */
-  --color-bg: #f0fdf4;             /* Page background */
-  --color-bg-secondary: #ecfdf5;   /* Section bg */
-  --color-surface: #ffffff;        /* Cards / navbar */
+  --color-bg: #f0fdf4;
+  /* Page background */
+  --color-bg-secondary: #ecfdf5;
+  /* Section bg */
+  --color-surface: #ffffff;
+  /* Cards / navbar */
 
   /* Text */
-  --color-text-primary: #052e16;   /* Headings */
-  --color-text-secondary: #14532d; /* Paragraph */
+  --color-text-primary: #052e16;
+  /* Headings */
+  --color-text-secondary: #14532d;
+  /* Paragraph */
   --color-text-muted: #6b7280;
 
   /* Borders */
@@ -19,12 +26,14 @@
 
   /* Status / Badges */
   --color-success: #22c55e;
-  --color-warning: #f59e0b;        /* Medium */
+  --color-warning: #f59e0b;
+  /* Medium */
   --color-info: #38bdf8;
 
   /* Shadow */
-  --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.06);
+  --shadow-soft: 0 10px 20px rgba(0, 0, 0, 0.06);
 }
+
 [data-theme="dark"] {
   /* Brand */
   --color-primary: #22c55e;
@@ -32,9 +41,11 @@
   --color-primary-soft: #052e16;
 
   /* Backgrounds */
-  --color-bg: #020617;             /* Page bg */
+  --color-bg: #1D2838;
+  /* Page bg */
   --color-bg-secondary: #020617;
-  --color-surface: #0f172a;        /* Cards / navbar */
+  --color-surface: #0f172a;
+  /* Cards / navbar */
 
   /* Text */
   --color-text-primary: #ecfdf5;
@@ -51,4 +62,16 @@
 
   /* Shadow */
   --shadow-soft: 0 6px 24px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+}
+
+button {
+  background-color: var(--color-primary);
 }

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 
 
 export const authContext = createContext();
+export const themeContext = createContext();
 
 const RootLayout = () => {
 
@@ -101,15 +102,18 @@ const RootLayout = () => {
         user,
         setUser,
         loading,
+        setLoading,
         logOut
-
     }
+    const [dark, setDark] = useState(false);
     return (
         <div>
-            <authContext.Provider value={contextValue}>
-                <Navbar />
-                <Outlet />
-            </authContext.Provider>
+            <themeContext.Provider value={{ dark, setDark }}>
+                <authContext.Provider value={contextValue}>
+                    <Navbar />
+                    <Outlet />
+                </authContext.Provider>
+            </themeContext.Provider>
 
         </div>
     );

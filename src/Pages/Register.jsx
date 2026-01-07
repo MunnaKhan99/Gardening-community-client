@@ -45,68 +45,94 @@ const Register = () => {
 
     }
     return (
-        <div className="flex flex-col max-w-md mx-auto p-6 rounded-md mt-12 sm:p-10 bg-black text-white">
+        <div className="max-w-md mx-auto mt-12 p-6 rounded-md border shadow-[var(--shadow-soft)] bg-[var(--bg-surface)]">
             <div className="mb-8 text-center">
-                <h1 className="my-3 text-4xl font-bold">Sign Up</h1>
-                <p className="text-sm dark:text-gray-600">Sign up you account </p>
+                <h1 className="text-4xl font-bold text-[var(--text-primary)]">
+                    Sign Up
+                </h1>
+                <p className="text-sm text-[var(--text-muted)]">
+                    Create your account
+                </p>
             </div>
-            <form onSubmit={handleSubmit} className="space-y-12">
-                <div className="space-y-4">
-                    <div>
-                        <label htmlFor="name" className="block mb-2 text-sm">Your Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            id="name"
-                            placeholder="john doe"
-                            className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="email" className="block mb-2 text-sm">Email address</label>
-                        <input
-                            type="email"
-                            name="email"
-                            id="email"
-                            placeholder="leroy@jenkins.com"
-                            className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
-                        />
-                    </div>
 
-                    <div>
-                        <label htmlFor="email" className="block mb-2 text-sm">Photo URL</label>
-                        <input
-                            type="text"
-                            name="photoUrl"
-                            id="photoUrl"
-                            placeholder="https://example.com/photo.jps"
-                            className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
-                        />
-                    </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                        Your Name *
+                    </label>
+                    <input
+                        type="text"
+                        name="name"
+                        required
+                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
+                   border-[var(--border-color)] text-[var(--text-primary)]
+                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                    />
+                </div>
 
-                    <div>
-                        <div className="flex justify-between mb-2">
-                            <label htmlFor="password" className="text-sm">Password</label>
-                        </div>
-                        <input
-                            type="password"
-                            name="password"
-                            id="password"
-                            placeholder="*****"
-                            className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800"
-                        />
-                    </div>
+                <div>
+                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                        Email *
+                    </label>
+                    <input
+                        type="email"
+                        name="email"
+                        required
+                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
+                   border-[var(--border-color)] text-[var(--text-primary)]
+                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                    />
                 </div>
-                <div className="space-y-2">
-                    <div>
-                        <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md dark:bg-violet-600 dark:text-gray-50">Sign up</button>
-                    </div>
-                    <p className="px-6 text-sm text-center dark:text-gray-600">Already have an account?
-                        <button type='button' onClick={() => navigate('/login')} className="hover:underline dark:text-violet-600">Sign in</button>.
-                    </p>
+
+                <div>
+                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                        Photo URL *
+                    </label>
+                    <input
+                        type="text"
+                        name="photoUrl"
+                        required
+                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
+                   border-[var(--border-color)] text-[var(--text-primary)]
+                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                    />
                 </div>
+
+                <div>
+                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                        Password *
+                    </label>
+                    <input
+                        type="password"
+                        name="password"
+                        required
+                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
+                   border-[var(--border-color)] text-[var(--text-primary)]
+                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full py-3 rounded-md font-semibold text-white
+                 bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)]"
+                >
+                    Sign Up
+                </button>
+
+                <p className="text-sm text-center text-[var(--text-muted)]">
+                    Already have an account?
+                    <a
+                        type="button"
+                        onClick={() => navigate('/login')}
+                        className="ml-1 font-medium text-[var(--btn-primary)] hover:underline"
+                    >
+                        Sign in
+                    </a>
+                </p>
             </form>
         </div>
+
     );
 };
 

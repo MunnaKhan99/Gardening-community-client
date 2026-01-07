@@ -5,7 +5,6 @@ import { useNavigate } from "react-router";
 const RightSide = ({ user, logOut }) => {
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
-    console.log(logOut);
 
     if (!user) {
         return (
