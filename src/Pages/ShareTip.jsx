@@ -58,7 +58,7 @@ const ShareTip = () => {
 
     return (
         <section
-            className="min-h-screen flex items-center justify-center px-4"
+            className="min-h-screen flex items-center justify-center px-4 pt-10"
             style={{
                 background:
                     "linear-gradient(180deg, var(--color-bg-secondary), var(--color-bg))",

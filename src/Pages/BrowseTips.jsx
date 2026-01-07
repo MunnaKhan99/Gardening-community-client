@@ -84,13 +84,13 @@ const BrowseTips = () => {
 
             {/* Table */}
             <div
-                className="max-w-6xl mx-auto rounded-xl overflow-hidden"
+                className="max-w-6xl mx-auto rounded-xl overflow-x-auto"
                 style={{
                     backgroundColor: "var(--color-surface)",
                     boxShadow: "var(--shadow-soft)"
                 }}
             >
-                <table className="w-full text-sm">
+                <table className="w-full min-w-[800px] text-sm">
                     <thead
                         style={{ backgroundColor: "var(--color-primary)" }}
                     >
@@ -111,7 +111,6 @@ const BrowseTips = () => {
                                 className="border-b last:border-none"
                                 style={{ borderColor: "var(--color-border)" }}
                             >
-                                {/* Image */}
                                 <td className="px-4 py-3">
                                     <img
                                         src={tip.images?.[0]}
@@ -120,7 +119,6 @@ const BrowseTips = () => {
                                     />
                                 </td>
 
-                                {/* Title */}
                                 <td
                                     className="px-4 py-3 max-w-xs truncate"
                                     style={{ color: "var(--color-text-primary)" }}
@@ -128,13 +126,11 @@ const BrowseTips = () => {
                                     {tip.title}
                                 </td>
 
-                                {/* Category */}
                                 <td className="px-4 py-3">
                                     <span
                                         className="px-3 py-1 rounded-full text-xs"
                                         style={{
-                                            backgroundColor:
-                                                "var(--color-primary-soft)",
+                                            backgroundColor: "var(--color-primary-soft)",
                                             color: "var(--color-primary)"
                                         }}
                                     >
@@ -142,7 +138,6 @@ const BrowseTips = () => {
                                     </span>
                                 </td>
 
-                                {/* Difficulty */}
                                 <td className="px-4 py-3">
                                     <span
                                         className="px-3 py-1 rounded-full text-xs"
@@ -161,7 +156,6 @@ const BrowseTips = () => {
                                     </span>
                                 </td>
 
-                                {/* Author */}
                                 <td
                                     className="px-4 py-3"
                                     style={{ color: "var(--color-text-secondary)" }}
@@ -169,16 +163,11 @@ const BrowseTips = () => {
                                     {tip.author_name}
                                 </td>
 
-                                {/* Action */}
                                 <td className="px-4 py-3">
                                     <button
-                                     onClick={()=> navigate(`/tips/${tip._id}`)}
-
+                                        onClick={() => navigate(`/tips/${tip._id}`)}
                                         className="px-4 py-1.5 rounded-full text-xs text-white transition"
-                                        style={{
-                                            backgroundColor:
-                                                "var(--color-primary)"
-                                        }}
+                                        style={{ backgroundColor: "var(--color-primary)" }}
                                     >
                                         See More
                                     </button>
@@ -188,6 +177,7 @@ const BrowseTips = () => {
                     </tbody>
                 </table>
             </div>
+
         </section>
     );
 };

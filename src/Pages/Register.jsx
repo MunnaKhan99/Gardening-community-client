@@ -45,7 +45,7 @@ const Register = () => {
 
     }
     return (
-        <div className="max-w-md mx-auto mt-12 p-6 rounded-md border shadow-[var(--shadow-soft)] bg-[var(--bg-surface)]">
+        <div className="max-w-md mx-auto mt-12 mt-10 p-6 rounded-md border shadow-[var(--shadow-soft)] bg-[var(--bg-surface)]">
             <div className="mb-8 text-center">
                 <h1 className="text-4xl font-bold text-[var(--text-primary)]">
                     Sign Up

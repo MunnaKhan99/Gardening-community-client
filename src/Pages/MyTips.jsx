@@ -1,10 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../Layout/RootLayout";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 
 const MyTips = () => {
+    const navigate = useNavigate();
     const { user, loading, setLoading } = useContext(authContext);
     const [tips, setTips] = useState([]);
 
@@ -22,7 +23,6 @@ const MyTips = () => {
             });
     }, [user, setLoading]);
 
-    // 🔴 DELETE HANDLER (SweetAlert)
     const handleDelete = (id) => {
         Swal.fire({
             title: "Are you sure?",
@@ -96,7 +96,7 @@ const MyTips = () => {
                         </p>
 
                         <Link
-                            to="/share-tip"
+                            to="/share-tips"
                             className="inline-block px-6 py-3 rounded-full text-white font-medium"
                             style={{ backgroundColor: "var(--color-primary)" }}
                         >
@@ -205,11 +205,13 @@ const MyTips = () => {
                                     <td className="px-4 py-3">
                                         <div className="flex gap-2">
                                             <button
+                                                onClick={() => navigate(`/update-tip/${tip._id}`)}
                                                 className="p-2 rounded-lg"
                                                 style={{ backgroundColor: "#e0f2fe" }}
                                             >
                                                 <FaEdit className="text-blue-600" />
                                             </button>
+
 
                                             <button
                                                 onClick={() => handleDelete(tip._id)}

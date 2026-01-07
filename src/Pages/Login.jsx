@@ -18,7 +18,7 @@ const Login = () => {
         navigate('/')
     }
     return (
-        <div className="w-full max-w-md p-4 rounded-md border shadow sm:p-8 mx-auto text-white">
+        <div className="w-full max-w-md p-4 rounded-md border shadow sm:p-8 mx-auto text-white pt-10">
             <h2 className="mb-3 text-3xl font-semibold text-center">Login to your account</h2>
             <p className="text-sm text-center dark:text-gray-600">Don't have account?
                 <a href="#" rel="noopener noreferrer" className="focus:underline hover:underline">Sign up here</a>
