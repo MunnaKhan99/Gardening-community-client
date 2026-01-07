@@ -1,9 +1,11 @@
 import React from "react";
 import { FaLeaf } from "react-icons/fa";
+import { useNavigate } from "react-router";
 
 const NavLogo = () => {
+    const navigate = useNavigate();
     return (
-        <div className="flex items-center gap-2 cursor-pointer">
+        <div className="flex items-center gap-2 cursor-pointer " onClick={() => navigate('/')}>
             <span className="h-9 w-9 flex items-center justify-center rounded-full bg-(--color-primary) text-white">
                 <FaLeaf />
             </span>

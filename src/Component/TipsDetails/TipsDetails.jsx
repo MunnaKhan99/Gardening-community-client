@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
+import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
 
 const TipsDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
+
     const [tip, setTip] = useState(null);
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
 
     useEffect(() => {
         fetch("http://localhost:5000/tips")
@@ -12,9 +16,21 @@ const TipsDetails = () => {
             .then(data => {
                 const singleTip = data.find(t => t._id === id);
                 setTip(singleTip);
-            })
-            .catch(err => console.error(err));
+                setLikeCount(singleTip?.liked || 0);
+            });
     }, [id]);
+
+    const handleLike = () => {
+        if (isLiked) return; // prevent multiple clicks
+
+        // 🔹 Optimistic UI
+        setIsLiked(true);
+        setLikeCount(prev => prev + 1);
+
+        fetch(`http://localhost:5000/tips/like/${id}`, {
+            method: "PATCH"
+        });
+    };
 
     if (!tip) return null;
 
@@ -49,34 +65,6 @@ const TipsDetails = () => {
                         alt={tip.title}
                         className="w-full h-full object-cover"
                     />
-
-                    <div className="absolute bottom-4 left-4 flex gap-2">
-                        <span
-                            className="px-3 py-1 rounded-full text-xs"
-                            style={{
-                                backgroundColor: "var(--color-primary-soft)",
-                                color: "var(--color-primary)"
-                            }}
-                        >
-                            {tip.category}
-                        </span>
-
-                        <span
-                            className="px-3 py-1 rounded-full text-xs"
-                            style={{
-                                backgroundColor:
-                                    tip.difficulty === "Easy"
-                                        ? "var(--color-primary-soft)"
-                                        : "var(--color-warning)",
-                                color:
-                                    tip.difficulty === "Easy"
-                                        ? "var(--color-primary)"
-                                        : "#78350f"
-                            }}
-                        >
-                            {tip.difficulty}
-                        </span>
-                    </div>
                 </div>
 
                 {/* Content */}
@@ -90,7 +78,7 @@ const TipsDetails = () => {
 
                     {/* Meta */}
                     <div
-                        className="flex flex-wrap gap-6 text-sm border-b pb-4"
+                        className="flex flex-wrap gap-6 text-sm border-b pb-4 items-center"
                         style={{
                             color: "var(--color-text-muted)",
                             borderColor: "var(--color-border)"
@@ -98,57 +86,36 @@ const TipsDetails = () => {
                     >
                         <span>By {tip.author_name}</span>
                         <span>{new Date().toDateString()}</span>
-                        <span>❤️ 187</span>
+
+                        {/* LIKE */}
+                        <butt
+                            onClick={handleLike}
+                            className="flex items-center gap-1 transition"
+                            style={{
+                                color: isLiked ? "#dc2626" : "var(--color-text-muted)"
+                            }}
+                        >
+                            {isLiked ? <MdFavorite size={20} /> : <MdFavoriteBorder size={20} />}
+                            {likeCount}
+                        </butt>
                     </div>
 
                     {/* Plant Type */}
                     <div>
-                        <h3
-                            className="text-sm font-semibold mb-1"
-                            style={{ color: "var(--color-text-primary)" }}
-                        >
+                        <h3 className="text-sm font-semibold mb-1">
                             Plant Type
                         </h3>
-                        <p style={{ color: "var(--color-text-secondary)" }}>
-                            {tip.plant_type_or_topic}
-                        </p>
+                        <p>{tip.plant_type_or_topic}</p>
                     </div>
 
                     {/* Description */}
                     <div>
-                        <h3
-                            className="text-sm font-semibold mb-1"
-                            style={{ color: "var(--color-text-primary)" }}
-                        >
+                        <h3 className="text-sm font-semibold mb-1">
                             Description
                         </h3>
-                        <p
-                            className="text-sm leading-relaxed"
-                            style={{ color: "var(--color-text-secondary)" }}
-                        >
+                        <p className="text-sm leading-relaxed">
                             {tip.description}
                         </p>
-                    </div>
-
-                    {/* Tips box */}
-                    <div
-                        className="rounded-xl p-4 text-sm"
-                        style={{
-                            backgroundColor: "var(--color-primary-soft)",
-                            color: "var(--color-text-secondary)"
-                        }}
-                    >
-                        <h4
-                            className="font-semibold mb-2"
-                            style={{ color: "var(--color-primary)" }}
-                        >
-                            Gardening Tips
-                        </h4>
-                        <ul className="list-disc ml-5 space-y-1">
-                            <li>Save this tip to try it in your own garden</li>
-                            <li>Share your results with the community</li>
-                            <li>Like the tip if you found it helpful</li>
-                        </ul>
                     </div>
                 </div>
             </div>

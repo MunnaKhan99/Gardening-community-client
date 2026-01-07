@@ -24,7 +24,7 @@ const RightSide = ({ user, logOut }) => {
             />
 
             {open && (
-                <div className="absolute right-0 mt-3 w-60 rounded-xl bg-(--color-surface) shadow-lg border border-(--color-border)">
+                <div className="absolute right-0 mt-3 w-60 rounded-xl bg-(--color-surface) shadow-lg ">
                     <div className="px-4 py-3 border-b border-(--color-border)">
                         <p className="font-medium">{user.displayName || "Google User"}</p>
                         <p className="text-sm text-(--color-text-muted)">
@@ -32,10 +32,10 @@ const RightSide = ({ user, logOut }) => {
                         </p>
                     </div>
 
-                    <button onClick={() => logOut()} className="w-full px-4 py-3 flex items-center gap-2 text-red-500 hover:bg-red-50">
+                    <div onClick={() => logOut()} className="w-full px-4 py-3 flex items-center gap-2 text-red-500 hover:bg-red-50">
                         <FaSignOutAlt />
                         Logout
-                    </button>
+                    </div>
                 </div>
             )}
         </div>
