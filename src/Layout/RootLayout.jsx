@@ -15,6 +15,10 @@ const RootLayout = () => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    const [dark, setDark] = useState(false);
+    const [themeLoading, setThemeLoading] = useState(true);
+
+
     //signup:
     const handleSignUP = (email, password, name, photoUrl) => {
         createUserWithEmailAndPassword(auth, email, password)
@@ -106,7 +110,42 @@ const RootLayout = () => {
         setLoading,
         logOut
     }
-    const [dark, setDark] = useState(false);
+
+    // 🔹 Load theme BEFORE render
+    useEffect(() => {
+        const savedTheme = localStorage.getItem("theme");
+
+        if (savedTheme === "dark") {
+            setDark(true);
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            setDark(false);
+            document.documentElement.setAttribute("data-theme", "");
+        }
+
+        setThemeLoading(false);
+    }, []);
+
+    // 🔹 Persist theme on change
+    useEffect(() => {
+        if (!themeLoading) {
+            if (dark) {
+                document.documentElement.setAttribute("data-theme", "dark");
+                localStorage.setItem("theme", "dark");
+            } else {
+                document.documentElement.setAttribute("data-theme", "");
+                localStorage.setItem("theme", "light");
+            }
+        }
+    }, [dark, themeLoading]);
+
+    if (themeLoading) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-black text-white">
+                Loading...
+            </div>
+        );
+    }
     return (
         <div>
             <themeContext.Provider value={{ dark, setDark }}>

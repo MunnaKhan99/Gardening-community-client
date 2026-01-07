@@ -45,87 +45,87 @@ const Register = () => {
 
     }
     return (
-        <div className="max-w-md mx-auto mt-12 mt-10 p-6 rounded-md border shadow-[var(--shadow-soft)] bg-[var(--bg-surface)]">
+        <div className="max-w-md mx-auto mt-12  p-6 rounded-md shadow-2xl bg-(--bg-surface)">
             <div className="mb-8 text-center">
-                <h1 className="text-4xl font-bold text-[var(--text-primary)]">
+                <h1 className="text-4xl font-bold text-(--text-primary)">
                     Sign Up
                 </h1>
-                <p className="text-sm text-[var(--text-muted)]">
+                <p className="text-sm text-(--text-muted)">
                     Create your account
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                    <label className="block mb-2 text-sm text-(--text-secondary)">
                         Your Name *
                     </label>
                     <input
                         type="text"
                         name="name"
                         required
-                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
-                   border-[var(--border-color)] text-[var(--text-primary)]
-                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                        className="w-full px-3 py-2 rounded-md border bg-(--bg-input)
+                   border-(--border-color) text-(--text-primary)
+                   focus:outline-none focus:ring-2 focus:ring-(--focus-ring)"
                     />
                 </div>
 
                 <div>
-                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                    <label className="block mb-2 text-sm text-(--text-secondary)">
                         Email *
                     </label>
                     <input
                         type="email"
                         name="email"
                         required
-                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
-                   border-[var(--border-color)] text-[var(--text-primary)]
-                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                        className="w-full px-3 py-2 rounded-md border bg-(--bg-input) 
+                   border-(--border-color) text-(--text-primary)
+                   focus:outline-none focus:ring-2 focus:ring-(--focus-ring)"
                     />
                 </div>
 
                 <div>
-                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                    <label className="block mb-2 text-sm text-(--text-secondary)">
                         Photo URL *
                     </label>
                     <input
                         type="text"
                         name="photoUrl"
                         required
-                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
-                   border-[var(--border-color)] text-[var(--text-primary)]
-                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                        className="w-full px-3 py-2 rounded-md border bg-(--bg-input) 
+                   border-(--border-color) text-(--text-primary)
+                   focus:outline-none focus:ring-2 focus:ring-(--focus-ring)"
                     />
                 </div>
 
                 <div>
-                    <label className="block mb-2 text-sm text-[var(--text-secondary)]">
+                    <label className="block mb-2 text-sm text-(--text-secondary)">
                         Password *
                     </label>
                     <input
                         type="password"
                         name="password"
                         required
-                        className="w-full px-3 py-2 rounded-md border bg-[var(--bg-input)] 
-                   border-[var(--border-color)] text-[var(--text-primary)]
-                   focus:outline-none focus:ring-2 focus:ring-[var(--focus-ring)]"
+                        className="w-full px-3 py-2 rounded-md border bg-(--bg-input)
+                   border-(--border-color) text-(--text-primary)
+                   focus:outline-none focus:ring-2 focus:ring-(--focus-ring)"
                     />
                 </div>
 
                 <button
                     type="submit"
                     className="w-full py-3 rounded-md font-semibold text-white
-                 bg-[var(--btn-primary)] hover:bg-[var(--btn-primary-hover)]"
+                 bg-(--btn-primary) hover:bg-(--btn-primary-hover)"
                 >
                     Sign Up
                 </button>
 
-                <p className="text-sm text-center text-[var(--text-muted)]">
+                <p className="text-sm text-center text-(--text-muted)">
                     Already have an account?
                     <a
                         type="button"
                         onClick={() => navigate('/login')}
-                        className="ml-1 font-medium text-[var(--btn-primary)] hover:underline"
+                        className="ml-1 font-medium text-(--btn-primary) hover:underline"
                     >
                         Sign in
                     </a>
