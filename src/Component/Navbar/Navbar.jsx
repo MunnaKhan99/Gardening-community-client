@@ -47,12 +47,12 @@ const Navbar = () => {
                 </div>
 
                 {/* Mobile menu icon */}
-                <button
+                <div
                     onClick={() => setOpen(true)}
                     className="md:hidden text-2xl text-(--color-text-primary)"
                 >
                     <HiMenu />
-                </button>
+                </div>
             </div>
 
             {/* Mobile Drawer */}
@@ -88,12 +88,12 @@ const Navbar = () => {
                                     />
                                 )}
 
-                                <button
+                                <div
                                     onClick={() => setOpen(false)}
                                     className="text-2xl"
                                 >
                                     <HiX />
-                                </button>
+                                </div>
                             </div>
                         </div>
 
