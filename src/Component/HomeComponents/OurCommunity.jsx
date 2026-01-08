@@ -30,7 +30,7 @@ const OurCommunity = () => {
                         color: "var(--color-primary)"
                     }}
                 >
-                    Our Community
+                    Our Community test
                 </span>
 
                 <h2

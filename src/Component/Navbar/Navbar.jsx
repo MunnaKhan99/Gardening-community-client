@@ -109,7 +109,7 @@ const Navbar = () => {
                                         to="/login"
                                         onClick={() => setOpen(false)}
                                         className="w-full py-3 rounded-lg text-center
-                           bg-(--color-primary) text-white font-medium"
+                                                    bg-(--color-primary) text-white font-medium"
                                     >
                                         Signin/SignUp
                                     </NavLink>
