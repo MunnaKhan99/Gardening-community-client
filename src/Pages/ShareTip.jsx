@@ -36,7 +36,7 @@ const ShareTip = () => {
             author_email: user?.email || "N/A",
         };
 
-        const res = await fetch("http://localhost:5000/tips", {
+        const res = await fetch("https://cultiv8-server.vercel.app/tips", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(tipData),

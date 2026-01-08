@@ -21,7 +21,7 @@ const UpdateTips = () => {
 
     // 🔹 Load existing tip data
     useEffect(() => {
-        fetch("http://localhost:5000/tips")
+        fetch("https://cultiv8-server.vercel.app/tips")
             .then(res => res.json())
             .then(data => {
                 const tip = data.find(t => t._id === id);
@@ -57,7 +57,7 @@ const UpdateTips = () => {
             availability: formData.availability,
         };
 
-        const res = await fetch(`http://localhost:5000/tips/${id}`, {
+        const res = await fetch(`https://cultiv8-server.vercel.app/tips/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedTip),

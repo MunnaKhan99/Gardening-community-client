@@ -5,7 +5,7 @@ const OurCommunity = () => {
     const [gardeners, setGardeners] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/gardener")
+        fetch("https://cultiv8-server.vercel.app/gardener")
             .then(res => res.json())
             .then(data => {
                 const activeGardeners = data.filter(
@@ -30,7 +30,7 @@ const OurCommunity = () => {
                         color: "var(--color-primary)"
                     }}
                 >
-                    Our Community test
+                    Our Community
                 </span>
 
                 <h2

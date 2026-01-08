@@ -11,7 +11,7 @@ const TipsDetails = () => {
     const [likeCount, setLikeCount] = useState(0);
 
     useEffect(() => {
-        fetch("http://localhost:5000/tips")
+        fetch("https://cultiv8-server.vercel.app/tips")
             .then(res => res.json())
             .then(data => {
                 const singleTip = data.find(t => t._id === id);
@@ -27,7 +27,7 @@ const TipsDetails = () => {
         setIsLiked(true);
         setLikeCount(prev => prev + 1);
 
-        fetch(`http://localhost:5000/tips/like/${id}`, {
+        fetch(`https://cultiv8-server.vercel.app/tips/like/${id}`, {
             method: "PATCH"
         });
     };

@@ -5,7 +5,7 @@ const GardenTips = () => {
     const [tips, setTips] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/tips")
+        fetch("https://cultiv8-server.vercel.app/tips")
             .then(res => res.json())
             .then(data => setTips(data))
             .catch(err => console.error(err));

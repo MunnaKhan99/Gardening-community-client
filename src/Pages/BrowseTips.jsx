@@ -7,7 +7,7 @@ const BrowseTips = () => {
     const [filter, setFilter] = useState("All");
 
     useEffect(() => {
-        fetch("http://localhost:5000/tips")
+        fetch("https://cultiv8-server.vercel.app/tips")
             .then(res => res.json())
             .then(data => {
                 const publicTips = data.filter(

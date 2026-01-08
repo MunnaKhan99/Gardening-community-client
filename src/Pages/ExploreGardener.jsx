@@ -6,7 +6,7 @@ const ExploreGardener = () => {
     const { loading, setLoading } = useContext(authContext);
 
     useEffect(() => {
-        fetch("http://localhost:5000/gardener")
+        fetch("https://cultiv8-server.vercel.app/gardener")
             .then(res => res.json())
             .then(data => {
                 setGardeners(data);
