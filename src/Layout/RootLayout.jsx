@@ -141,21 +141,28 @@ const RootLayout = () => {
 
     if (themeLoading) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-black text-white">
+            <div className="h-auto flex items-center justify-center bg-black text-white">
                 Loading...
             </div>
         );
     }
     return (
-        <div>
+        <div className="flex flex-col min-h-screen">
             <themeContext.Provider value={{ dark, setDark }}>
                 <authContext.Provider value={contextValue}>
+
                     <Navbar />
-                    <Outlet />
+
+                    {/* ২. Outlet এর চারপাশে একটি div দিন এবং flex-grow ক্লাস দিন */}
+                    {/* এটি মাঝখানের ফাঁকা জায়গা পূরণ করে ফুটারকে নিচে ঠেলে দেবে */}
+                    <div className="flex-grow">
+                        <Outlet />
+                    </div>
+
                     <Footer />
+
                 </authContext.Provider>
             </themeContext.Provider>
-
         </div>
     );
 };
