@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { FaSeedling } from "react-icons/fa";
 import { authContext } from "../Layout/RootLayout";
+import axios from "axios";
 
 const ShareTip = () => {
     const { user } = useContext(authContext);
