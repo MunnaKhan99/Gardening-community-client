@@ -7,26 +7,30 @@ import axios from "axios";
 
 const MyTips = () => {
     const navigate = useNavigate();
-    const { user, loading, setLoading } = useContext(authContext);
+    const { user, loading } = useContext(authContext);
     const [tips, setTips] = useState([]);
+    const [isFetching, setIsFetching] = useState(true);
 
     useEffect(() => {
-        if (!user?.email) return;
-
-        axios
-            .get(`${import.meta.env.VITE_SERVER_URL}/tips`)
-            .then(res => {
-                const myTips = res.data.filter(
-                    tip => tip.author_email === user.email
-                );
-                setTips(myTips);
-                setLoading(false);
-            })
-            .catch(err => {
-                console.error(err);
-                setLoading(false);
-            });
-    }, [user?.email, setLoading]);
+        // যদি ইউজার লোড হয়ে যায় এবং ইমেইল থাকে, তবেই ডাটা ফেচ করবে
+        if (!loading && user?.email) {
+            axios
+                .get(`${import.meta.env.VITE_SERVER_URL}/tips`, {
+                    params: { author_email: user.email }
+                })
+                .then(res => {
+                    setTips(res.data);
+                    setIsFetching(false);
+                })
+                .catch(err => {
+                    console.error("Fetch Error:", err);
+                    setIsFetching(false);
+                });
+        } else if (!loading && !user) {
+            // যদি ইউজার লগইন করা না থাকে
+            setIsFetching(false);
+        }
+    }, [user?.email, loading]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -42,11 +46,9 @@ const MyTips = () => {
                 axios
                     .delete(`${import.meta.env.VITE_SERVER_URL}/tips/${id}`)
                     .then(res => {
-                        // যদি backend থেকে deletedCount পাঠাও
+                        // আপনার ব্যাকেন্ড 'res.send(result)' পাঠাচ্ছে, তাই সরাসরি deletedCount পাওয়া যাবে
                         if (res.data?.deletedCount > 0) {
-                            // UI update
                             setTips(prev => prev.filter(tip => tip._id !== id));
-
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "Your garden tip has been deleted.",
@@ -56,23 +58,25 @@ const MyTips = () => {
                         }
                     })
                     .catch(err => {
-                        console.error(err);
-                        Swal.fire({
-                            title: "Error!",
-                            text: "Failed to delete tip. Try again.",
-                            icon: "error"
-                        });
+                        console.error("Delete Error:", err);
+                        Swal.fire("Error!", "Failed to delete tip.", "error");
                     });
             }
         });
     };
 
-
-    if (loading) return null;
+    // লোডিং অবস্থা
+    if (loading || isFetching) {
+        return (
+            <div className="h-auto flex justify-center items-center">
+                <span className="loading loading-bars loading-lg text-success"></span>
+            </div>
+        );
+    }
 
     return (
         <section
-            className="min-h-screen py-16"
+            className="h-auto py-16"
             style={{ backgroundColor: "var(--color-bg)" }}
         >
             {/* Header */}
@@ -87,12 +91,12 @@ const MyTips = () => {
                     className="mt-1"
                     style={{ color: "var(--color-text-muted)" }}
                 >
-                    Manage all your shared gardening tips
+                    Manage all your shared gardening tips ({tips.length})
                 </p>
             </div>
 
             {/* EMPTY STATE */}
-            {tips.length === 0 && (
+            {tips.length === 0 ? (
                 <div className="max-w-6xl mx-auto px-4">
                     <div
                         className="rounded-2xl p-16 text-center"
@@ -101,26 +105,20 @@ const MyTips = () => {
                             boxShadow: "var(--shadow-soft)"
                         }}
                     >
-                        <p
-                            className="mb-6"
-                            style={{ color: "var(--color-text-muted)" }}
-                        >
+                        <p className="mb-6" style={{ color: "var(--color-text-muted)" }}>
                             You haven't shared any garden tips yet.
                         </p>
-
                         <Link
                             to="/share-tips"
-                            className="inline-block px-6 py-3 rounded-full text-white font-medium"
+                            className="inline-block px-6 py-3 rounded-full text-white font-medium hover:opacity-90 transition-opacity"
                             style={{ backgroundColor: "var(--color-primary)" }}
                         >
                             Share Your First Tip
                         </Link>
                     </div>
                 </div>
-            )}
-
-            {/* TABLE VIEW */}
-            {tips.length > 0 && (
+            ) : (
+                /* TABLE VIEW */
                 <div
                     className="max-w-6xl mx-auto px-4 rounded-2xl overflow-hidden"
                     style={{
@@ -128,117 +126,85 @@ const MyTips = () => {
                         boxShadow: "var(--shadow-soft)"
                     }}
                 >
-                    <table className="w-full text-sm">
-                        <thead
-                            style={{ backgroundColor: "var(--color-primary)" }}
-                        >
-                            <tr className="text-white text-left">
-                                <th className="px-4 py-3">Image</th>
-                                <th className="px-4 py-3">Title</th>
-                                <th className="px-4 py-3">Category</th>
-                                <th className="px-4 py-3">Difficulty</th>
-                                <th className="px-4 py-3">Status</th>
-                                <th className="px-4 py-3">Likes</th>
-                                <th className="px-4 py-3">Actions</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {tips.map(tip => (
-                                <tr
-                                    key={tip._id}
-                                    className="border-b last:border-none"
-                                    style={{ borderColor: "var(--color-border)" }}
-                                >
-                                    {/* Image */}
-                                    <td className="px-4 py-3">
-                                        <img
-                                            src={tip.images?.[0]}
-                                            alt={tip.title}
-                                            className="w-12 h-12 rounded-lg object-cover"
-                                        />
-                                    </td>
-
-                                    {/* Title */}
-                                    <td
-                                        className="px-4 py-3"
-                                        style={{ color: "var(--color-text-primary)" }}
-                                    >
-                                        <p className="font-medium">{tip.title}</p>
-                                        <p
-                                            className="text-xs"
-                                            style={{ color: "var(--color-text-muted)" }}
-                                        >
-                                            {tip.plant_type_or_topic}
-                                        </p>
-                                    </td>
-
-                                    {/* Category */}
-                                    <td className="px-4 py-3">
-                                        <span
-                                            className="px-3 py-1 rounded-full text-xs"
-                                            style={{
-                                                backgroundColor: "var(--color-primary-soft)",
-                                                color: "var(--color-primary)"
-                                            }}
-                                        >
-                                            {tip.category}
-                                        </span>
-                                    </td>
-
-                                    {/* Difficulty */}
-                                    <td className="px-4 py-3">
-                                        <span
-                                            className="px-3 py-1 rounded-full text-xs"
-                                            style={{
-                                                backgroundColor: "var(--color-primary-soft)",
-                                                color: "var(--color-primary)"
-                                            }}
-                                        >
-                                            {tip.difficulty}
-                                        </span>
-                                    </td>
-
-                                    {/* Status */}
-                                    <td className="px-4 py-3">
-                                        <span
-                                            className="flex items-center gap-1 text-sm"
-                                            style={{ color: "var(--color-success)" }}
-                                        >
-                                            <FaEye /> {tip.availability}
-                                        </span>
-                                    </td>
-
-                                    {/* Likes */}
-                                    <td className="px-4 py-3">
-                                        {tip.likes || 0}
-                                    </td>
-
-                                    {/* Actions */}
-                                    <td className="px-4 py-3">
-                                        <div className="flex gap-2">
-                                            <button
-                                                onClick={() => navigate(`/update-tip/${tip._id}`)}
-                                                className="p-2 rounded-lg"
-                                                style={{ backgroundColor: "#e0f2fe" }}
-                                            >
-                                                <FaEdit className="text-blue-600" />
-                                            </button>
-
-
-                                            <button
-                                                onClick={() => handleDelete(tip._id)}
-                                                className="p-2 rounded-lg"
-                                                style={{ backgroundColor: "#fee2e2" }}
-                                            >
-                                                <FaTrash className="text-red-600" />
-                                            </button>
-                                        </div>
-                                    </td>
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-sm">
+                            <thead style={{ backgroundColor: "var(--color-primary)" }}>
+                                <tr className="text-white text-left">
+                                    <th className="px-4 py-4">Image</th>
+                                    <th className="px-4 py-4">Title</th>
+                                    <th className="px-4 py-4">Category</th>
+                                    <th className="px-4 py-4">Difficulty</th>
+                                    <th className="px-4 py-4">Status</th>
+                                    <th className="px-4 py-4">Likes</th>
+                                    <th className="px-4 py-4">Actions</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {tips.map(tip => (
+                                    <tr
+                                        key={tip._id}
+                                        className="border-b last:border-none hover:bg-gray-50/50 transition-colors"
+                                        style={{ borderColor: "var(--color-border)" }}
+                                    >
+                                        <td className="px-4 py-3">
+                                            <img
+                                                src={tip.images?.[0] || "https://via.placeholder.com/150"}
+                                                alt={tip.title}
+                                                className="w-12 h-12 rounded-lg object-cover bg-gray-100"
+                                            />
+                                        </td>
+                                        <td className="px-4 py-3" style={{ color: "var(--color-text-primary)" }}>
+                                            <p className="font-semibold">{tip.title}</p>
+                                            <p className="text-xs" style={{ color: "var(--color-text-muted)" }}>
+                                                {tip.plant_type_or_topic}
+                                            </p>
+                                        </td>
+                                        <td className="px-4 py-3">
+                                            <span
+                                                className="px-3 py-1 rounded-full text-xs font-medium"
+                                                style={{
+                                                    backgroundColor: "var(--color-primary-soft)",
+                                                    color: "var(--color-primary)"
+                                                }}
+                                            >
+                                                {tip.category}
+                                            </span>
+                                        </td>
+                                        <td className="px-4 py-3 capitalize">{tip.difficulty}</td>
+                                        <td className="px-4 py-3">
+                                            <span
+                                                className="flex items-center gap-1 text-xs font-medium"
+                                                style={{ color: "var(--color-success)" }}
+                                            >
+                                                <FaEye /> {tip.availability}
+                                            </span>
+                                        </td>
+                                        <td className="px-4 py-3 font-medium">{tip.likes || 0}</td>
+                                        <td className="px-4 py-3">
+                                            <div className="flex gap-2">
+                                                <button
+                                                    onClick={() => navigate(`/update-tip/${tip._id}`)}
+                                                    className="p-2 rounded-lg hover:brightness-95 transition-all"
+                                                    style={{ backgroundColor: "#e0f2fe" }}
+                                                    title="Edit"
+                                                >
+                                                    <FaEdit className="text-blue-600" />
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(tip._id)}
+                                                    className="p-2 rounded-lg hover:brightness-95 transition-all"
+                                                    style={{ backgroundColor: "#fee2e2" }}
+                                                    title="Delete"
+                                                >
+                                                    <FaTrash className="text-red-600" />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             )}
         </section>
