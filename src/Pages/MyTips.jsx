@@ -3,6 +3,7 @@ import { authContext } from "../Layout/RootLayout";
 import { Link, useNavigate } from "react-router";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const MyTips = () => {
     const navigate = useNavigate();
@@ -12,16 +13,20 @@ const MyTips = () => {
     useEffect(() => {
         if (!user?.email) return;
 
-        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
-            .then(res => res.json())
-            .then(data => {
-                const myTips = data.filter(
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/tips`)
+            .then(res => {
+                const myTips = res.data.filter(
                     tip => tip.author_email === user.email
                 );
                 setTips(myTips);
                 setLoading(false);
+            })
+            .catch(err => {
+                console.error(err);
+                setLoading(false);
             });
-    }, [user, setLoading]);
+    }, [user?.email, setLoading]);
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -34,12 +39,11 @@ const MyTips = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`${import.meta.env.VITE_SERVER_URL}/tips/${id}`, {
-                    method: "DELETE"
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.deletedCount > 0) {
+                axios
+                    .delete(`${import.meta.env.VITE_SERVER_URL}/tips/${id}`)
+                    .then(res => {
+                        // যদি backend থেকে deletedCount পাঠাও
+                        if (res.data?.deletedCount > 0) {
                             // UI update
                             setTips(prev => prev.filter(tip => tip._id !== id));
 
@@ -50,10 +54,19 @@ const MyTips = () => {
                                 confirmButtonColor: "#16a34a"
                             });
                         }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        Swal.fire({
+                            title: "Error!",
+                            text: "Failed to delete tip. Try again.",
+                            icon: "error"
+                        });
                     });
             }
         });
     };
+
 
     if (loading) return null;
 

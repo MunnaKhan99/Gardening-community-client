@@ -36,25 +36,31 @@ const ShareTip = () => {
             author_email: user?.email || "N/A",
         };
 
-        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tips`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(tipData),
-        });
+        try {
+            const res = await axios.post(
+                `${import.meta.env.VITE_SERVER_URL}/tips`,
+                tipData
+            );
 
-        if (res.ok) {
-            alert("Garden tip shared successfully");
-            setFormData({
-                title: "",
-                plant_type_or_topic: "",
-                difficulty: "Easy",
-                description: "",
-                image: "",
-                category: "Seasonal Tips",
-                availability: "Public",
-            });
+            if (res.status === 201 || res.status === 200) {
+                alert("Garden tip shared successfully");
+
+                setFormData({
+                    title: "",
+                    plant_type_or_topic: "",
+                    difficulty: "Easy",
+                    description: "",
+                    image: "",
+                    category: "Seasonal Tips",
+                    availability: "Public",
+                });
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Failed to share garden tip. Try again.");
         }
     };
+
 
     return (
         <section

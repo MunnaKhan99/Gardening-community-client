@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
@@ -5,16 +6,17 @@ const OurCommunity = () => {
     const [gardeners, setGardeners] = useState([]);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/gardener`)
-            .then(res => res.json())
-            .then(data => {
-                const activeGardeners = data.filter(
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/gardener`)
+            .then(res => {
+                const activeGardeners = res.data.filter(
                     gardener => gardener.status === "Active"
                 );
                 setGardeners(activeGardeners);
             })
             .catch(err => console.error(err));
     }, []);
+
 
     return (
         <section

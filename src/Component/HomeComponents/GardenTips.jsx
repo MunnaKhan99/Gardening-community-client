@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
@@ -5,9 +6,9 @@ const GardenTips = () => {
     const [tips, setTips] = useState([]);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
-            .then(res => res.json())
-            .then(data => setTips(data))
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/tips`)
+            .then(res => setTips(res.data))
             .catch(err => console.error(err));
     }, []);
 

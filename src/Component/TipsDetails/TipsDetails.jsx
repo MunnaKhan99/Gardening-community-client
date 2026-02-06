@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { MdFavorite, MdFavoriteBorder } from "react-icons/md";
+import axios from "axios";
 
 const TipsDetails = () => {
     const { id } = useParams();
@@ -11,14 +12,20 @@ const TipsDetails = () => {
     const [likeCount, setLikeCount] = useState(0);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
-            .then(res => res.json())
-            .then(data => {
-                const singleTip = data.find(t => t._id === id);
+        if (!id) return;
+
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/tips`)
+            .then(res => {
+                const singleTip = res.data.find(t => t._id === id);
+                if (!singleTip) return;
+
                 setTip(singleTip);
-                setLikeCount(singleTip?.liked || 0);
-            });
+                setLikeCount(singleTip.liked || 0);
+            })
+            .catch(err => console.error(err));
     }, [id]);
+
 
     const handleLike = () => {
         if (isLiked) return; // prevent multiple clicks
@@ -27,9 +34,14 @@ const TipsDetails = () => {
         setIsLiked(true);
         setLikeCount(prev => prev + 1);
 
-        fetch(`${import.meta.env.VITE_SERVER_URL}/tips/like/${id}`, {
-            method: "PATCH"
-        });
+        axios
+            .patch(`${import.meta.env.VITE_SERVER_URL}/tips/like/${id}`)
+            .catch(err => {
+                console.error(err);
+                // যদি backend fail করে, optimistic update rollback করা যেতে পারে
+                setIsLiked(false);
+                setLikeCount(prev => prev - 1);
+            });
     };
 
     if (!tip) return null;

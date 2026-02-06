@@ -1,22 +1,26 @@
 import { useContext, useEffect, useState } from "react";
 import { authContext } from "../Layout/RootLayout";
+import axios from "axios";
 
 const ExploreGardener = () => {
     const [gardeners, setGardeners] = useState([]);
     const { loading, setLoading } = useContext(authContext);
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/gardener`)
-            .then(res => res.json())
-            .then(data => {
-                setGardeners(data);
-                setLoading(false);
-            })
-            .catch(err => {
+        const loadGardeners = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/gardener`);
+                setGardeners(res.data);
+            } catch (err) {
                 console.error(err);
+            } finally {
                 setLoading(false);
-            });
+            }
+        };
+
+        loadGardeners();
     }, []);
+
 
     if (loading) return <p className="text-center py-10">Loading...</p>;
 

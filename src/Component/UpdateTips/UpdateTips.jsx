@@ -3,6 +3,7 @@ import { FaSeedling } from "react-icons/fa";
 import { useParams, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import { authContext } from "../../Layout/RootLayout";
+import axios from "axios";
 
 const UpdateTips = () => {
     const { user } = useContext(authContext);
@@ -21,23 +22,27 @@ const UpdateTips = () => {
 
     // 🔹 Load existing tip data
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
-            .then(res => res.json())
-            .then(data => {
-                const tip = data.find(t => t._id === id);
-                if (tip) {
-                    setFormData({
-                        title: tip.title,
-                        plant_type_or_topic: tip.plant_type_or_topic,
-                        difficulty: tip.difficulty,
-                        description: tip.description,
-                        image: tip.images?.[0],
-                        category: tip.category,
-                        availability: tip.availability,
-                    });
-                }
-            });
+        if (!id) return;
+
+        axios
+            .get(`${import.meta.env.VITE_SERVER_URL}/tips`)
+            .then(res => {
+                const tip = res.data.find(t => t._id === id);
+                if (!tip) return;
+
+                setFormData({
+                    title: tip.title,
+                    plant_type_or_topic: tip.plant_type_or_topic,
+                    difficulty: tip.difficulty,
+                    description: tip.description,
+                    image: tip.images?.[0],
+                    category: tip.category,
+                    availability: tip.availability,
+                });
+            })
+            .catch(err => console.error(err));
     }, [id]);
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -57,22 +62,31 @@ const UpdateTips = () => {
             availability: formData.availability,
         };
 
-        const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/tips/${id}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedTip),
-        });
+        try {
+            const res = await axios.put(
+                `${import.meta.env.VITE_SERVER_URL}/tips/${id}`,
+                updatedTip
+            );
 
-        if (res.ok) {
+            if (res.status === 200) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Updated!",
+                    text: "Your garden tip has been updated.",
+                    confirmButtonColor: "#16a34a",
+                });
+                navigate("/my-tips");
+            }
+        } catch (err) {
+            console.error(err);
             Swal.fire({
-                icon: "success",
-                title: "Updated!",
-                text: "Your garden tip has been updated.",
-                confirmButtonColor: "#16a34a",
+                icon: "error",
+                title: "Update failed",
+                text: "Something went wrong. Please try again.",
             });
-            navigate("/my-tips");
         }
     };
+
 
     return (
         <section

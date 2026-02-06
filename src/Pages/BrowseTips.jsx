@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -7,16 +8,21 @@ const BrowseTips = () => {
     const [filter, setFilter] = useState("All");
 
     useEffect(() => {
-        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
-            .then(res => res.json())
-            .then(data => {
-                const publicTips = data.filter(
+        const loadTips = async () => {
+            try {
+                const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/tips`);
+                const publicTips = res.data.filter(
                     tip => tip.availability === "Public"
                 );
                 setTips(publicTips);
-            })
-            .catch(err => console.error(err));
+            } catch (err) {
+                console.error(err);
+            }
+        };
+
+        loadTips();
     }, []);
+
 
     const filteredTips =
         filter === "All"
