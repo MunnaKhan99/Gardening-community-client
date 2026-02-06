@@ -7,7 +7,7 @@ const BrowseTips = () => {
     const [filter, setFilter] = useState("All");
 
     useEffect(() => {
-        fetch("https://cultiv8-server.vercel.app/tips")
+        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
             .then(res => res.json())
             .then(data => {
                 const publicTips = data.filter(

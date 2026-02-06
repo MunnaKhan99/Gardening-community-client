@@ -12,7 +12,7 @@ const MyTips = () => {
     useEffect(() => {
         if (!user?.email) return;
 
-        fetch("https://cultiv8-server.vercel.app/tips")
+        fetch(`${import.meta.env.VITE_SERVER_URL}/tips`)
             .then(res => res.json())
             .then(data => {
                 const myTips = data.filter(
@@ -34,7 +34,7 @@ const MyTips = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`https://cultiv8-server.vercel.app/tips/${id}`, {
+                fetch(`${import.meta.env.VITE_SERVER_URL}/tips/${id}`, {
                     method: "DELETE"
                 })
                     .then(res => res.json())

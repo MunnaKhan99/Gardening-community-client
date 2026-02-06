@@ -17,7 +17,7 @@ const Navbar = () => {
         <header
             className="
             w-full sticky top-0 z-50
-            bg-(--color-bg)/70
+            bg-(--color-bg)/80
             backdrop-blur-md
             border-b border-(--color-border)/40
             shadow-sm

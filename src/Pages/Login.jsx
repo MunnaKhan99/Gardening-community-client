@@ -18,7 +18,7 @@ const Login = () => {
         navigate('/')
     }
     return (
-        <div className="w-full max-w-md p-4 rounded-md  shadow-2xl sm:p-8 mx-auto text-white pt-10">
+        <div className="w-full max-w-md p-4 rounded-md  shadow-2xl sm:p-8 mx-auto text-(--text-primary) pt-10">
             <h1 className="mb-3 text-3xl font-semibold text-(--text-primary) text-center pb-10">Login to your account</h1>
             <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="space-y-4">
